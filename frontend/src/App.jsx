@@ -11,16 +11,18 @@ import AddBook from "./pages/AddBook";
 import BookDetails from "./pages/BookDetails";
 import Favorites from "./pages/Favorites";
 import EditBook from "./pages/EditBook";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-stone-100">
+      <div className="flex min-h-screen flex-col bg-stone-100">
         <Navbar />
 
-        <main>
+        <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/books/add" element={<AddBook />} />
             <Route path="/books/:id/edit" element={<EditBook />} />
             <Route path="/favorites" element={<Favorites />} />

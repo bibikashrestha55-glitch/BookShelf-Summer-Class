@@ -1,6 +1,6 @@
 function About() {
   return (
-    <section className="mx-auto max-w-4xl px-6 py-16">
+    <section className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-4xl flex-col justify-center px-6 py-16">
       <div className="text-center">
         <p className="text-sm font-medium uppercase tracking-[0.3em] text-amber-800">
           About BookShelf
@@ -17,9 +17,10 @@ function About() {
         </p>
       </div>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-3">
+      <div className="mt-14 grid gap-6 md:grid-cols-3">
         <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
           <h2 className="text-xl font-semibold text-emerald-950">Curate</h2>
+
           <p className="mt-3 text-sm leading-6 text-stone-600">
             Build your own collection and keep your reading list organized.
           </p>
@@ -27,6 +28,7 @@ function About() {
 
         <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
           <h2 className="text-xl font-semibold text-emerald-950">Track</h2>
+
           <p className="mt-3 text-sm leading-6 text-stone-600">
             Follow your reading progress and know what deserves your attention
             next.
@@ -35,6 +37,7 @@ function About() {
 
         <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
           <h2 className="text-xl font-semibold text-emerald-950">Remember</h2>
+
           <p className="mt-3 text-sm leading-6 text-stone-600">
             Rate and review the books that become part of your story.
           </p>

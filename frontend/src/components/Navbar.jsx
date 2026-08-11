@@ -3,16 +3,41 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
+    const checkAuth = () => {
+      const token = localStorage.getItem("token");
+      const storedUser = localStorage.getItem("user");
+
+      setIsLoggedIn(!!token);
+
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      } else {
+        setUser(null);
+      }
+    };
+
+    checkAuth();
+
+    window.addEventListener("authChange", checkAuth);
+
+    return () => {
+      window.removeEventListener("authChange", checkAuth);
+    };
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
     setIsLoggedIn(false);
+    setUser(null);
+
+    window.dispatchEvent(new Event("authChange"));
+
     navigate("/login");
   };
 
@@ -56,18 +81,35 @@ function Navbar() {
           >
             About
           </Link>
+
+          {isLoggedIn && (
+            <Link
+              to="/dashboard"
+              className="text-sm text-stone-200 transition hover:text-amber-200"
+            >
+              Dashboard
+            </Link>
+          )}
         </div>
 
         {/* Authentication */}
         <div className="flex items-center gap-3">
           {isLoggedIn ? (
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="rounded-md border border-amber-200/60 px-4 py-2 text-sm text-amber-100 transition hover:bg-amber-200 hover:text-emerald-950"
-            >
-              Logout
-            </button>
+            <>
+              {user && (
+                <span className="text-sm text-amber-100">
+                  {user.first_name}
+                </span>
+              )}
+
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="rounded-md border border-amber-200/60 px-4 py-2 text-sm text-amber-100 transition hover:bg-amber-200 hover:text-emerald-950"
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <>
               <Link
