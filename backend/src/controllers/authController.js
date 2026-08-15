@@ -63,9 +63,9 @@ const registerUser = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("Registration error:", error.message);
     res.status(500).json({
       message: "Registration failed",
-      error: error.message,
     });
   }
 };
@@ -115,9 +115,9 @@ const loginUser = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("Login error:", error.message);
     res.status(500).json({
       message: "Login failed",
-      error: error.message,
     });
   }
 };

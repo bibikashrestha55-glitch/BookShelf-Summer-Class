@@ -27,6 +27,23 @@ const bookSchema = new mongoose.Schema(
       default: "",
     },
 
+    genres: {
+      type: [String],
+      default: [],
+      validate: {
+        validator: function (value) {
+          return Array.isArray(value);
+        },
+        message: "Genres must be an array of supported values.",
+      },
+    },
+
+    coverImage: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
     // The user who owns this book
     user: {
       type: mongoose.Schema.Types.ObjectId,

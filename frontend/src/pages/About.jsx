@@ -1,45 +1,55 @@
 function About() {
   return (
-    <section className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-4xl flex-col justify-center px-6 py-16">
+    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="text-center">
-        <p className="text-sm font-medium uppercase tracking-[0.3em] text-amber-800">
+        <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#8c6a26]">
           About BookShelf
         </p>
 
-        <h1 className="mt-3 text-4xl font-bold text-emerald-950 md:text-5xl">
+        <h1 className="display-serif mt-3 text-5xl text-[#062f2a] md:text-7xl">
           A quieter place for your reading life.
         </h1>
 
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-stone-600">
-          BookShelf is a personal reading list tracker designed to help you
-          organize your books, keep track of your progress, and remember the
-          stories that matter to you.
+        <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-[#5a5047]">
+          BookShelf is a private reading room for your personal library — a
+          place to gather titles that matter, track what you are reading, and
+          preserve the stories that stay with you long after the final page.
         </p>
       </div>
 
-      <div className="mt-14 grid gap-6 md:grid-cols-3">
-        <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-emerald-950">Curate</h2>
-
-          <p className="mt-3 text-sm leading-6 text-stone-600">
-            Build your own collection and keep your reading list organized.
+      <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <div className="luxury-panel rounded-3xl p-7">
+          <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#8c6a26]">
+            The Idea
+          </p>
+          <h2 className="display-serif mt-3 text-4xl text-[#062f2a]">Curate</h2>
+          <p className="mt-4 text-base leading-7 text-[#5b534f]">
+            Build a collection that feels considered, personal, and beautifully
+            organized — a shelf you actually want to return to.
           </p>
         </div>
 
-        <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-emerald-950">Track</h2>
-
-          <p className="mt-3 text-sm leading-6 text-stone-600">
-            Follow your reading progress and know what deserves your attention
-            next.
+        <div className="luxury-panel rounded-3xl p-7">
+          <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#8c6a26]">
+            The Practice
+          </p>
+          <h2 className="display-serif mt-3 text-4xl text-[#062f2a]">Track</h2>
+          <p className="mt-4 text-base leading-7 text-[#5b534f]">
+            Follow what you want to read, what you are reading, and what you
+            have finished — all without losing the romance of the book itself.
           </p>
         </div>
 
-        <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-emerald-950">Remember</h2>
-
-          <p className="mt-3 text-sm leading-6 text-stone-600">
-            Rate and review the books that become part of your story.
+        <div className="luxury-panel rounded-3xl p-7">
+          <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#8c6a26]">
+            The Memory
+          </p>
+          <h2 className="display-serif mt-3 text-4xl text-[#062f2a]">
+            Remember
+          </h2>
+          <p className="mt-4 text-base leading-7 text-[#5b534f]">
+            Rate the books that move you, leave notes that matter, and keep a
+            living archive of your reading life.
           </p>
         </div>
       </div>

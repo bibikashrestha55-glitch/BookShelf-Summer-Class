@@ -16,7 +16,6 @@ const getComments = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to fetch comments",
-      error: error.message,
     });
   }
 };
@@ -61,7 +60,6 @@ const createComment = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to create comment",
-      error: error.message,
     });
   }
 };
@@ -91,7 +89,6 @@ const deleteComment = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to delete comment",
-      error: error.message,
     });
   }
 };

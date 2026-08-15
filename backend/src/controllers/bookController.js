@@ -1,4 +1,5 @@
 const Book = require("../models/Book");
+const { normalizeGenres, SUPPORTED_GENRES } = require("../config/genres");
 
 // ========================================
 // GET ALL BOOKS FOR LOGGED-IN USER
@@ -7,18 +8,35 @@ const Book = require("../models/Book");
 const getBooks = async (req, res) => {
   try {
     const userId = req.user.id || req.user._id;
+    const { genre } = req.query;
 
-    const books = await Book.find({
+    if (genre && !SUPPORTED_GENRES.includes(genre)) {
+      return res.status(400).json({
+        message: "Invalid genre filter.",
+      });
+    }
+
+    const filter = {
       user: userId,
-    }).sort({ createdAt: -1 });
+    };
 
-    res.status(200).json(books);
+    if (genre) {
+      filter.genres = { $in: [genre] };
+    }
+
+    const books = await Book.find(filter).sort({ createdAt: -1 });
+
+    res.status(200).json(
+      books.map((book) => ({
+        ...book.toObject(),
+        genres: book.genres || [],
+      })),
+    );
   } catch (error) {
     console.error("Get books error:", error);
 
     res.status(500).json({
       message: "Failed to fetch books",
-      error: error.message,
     });
   }
 };
@@ -42,13 +60,15 @@ const getBookById = async (req, res) => {
       });
     }
 
-    res.status(200).json(book);
+    const normalizedBook = book.toObject ? book.toObject() : book;
+    normalizedBook.genres = normalizedBook.genres || [];
+
+    res.status(200).json(normalizedBook);
   } catch (error) {
     console.error("Get book error:", error);
 
     res.status(500).json({
       message: "Failed to fetch book",
-      error: error.message,
     });
   }
 };
@@ -61,13 +81,17 @@ const createBook = async (req, res) => {
   try {
     const userId = req.user.id || req.user._id;
 
-    const { title, author, status, description } = req.body;
+    const body = req.body || {};
+    const { title, author, status, description, genres } = body;
+
+    const normalizedGenres = normalizeGenres(genres || []);
 
     const newBook = await Book.create({
       title,
       author,
       status,
       description,
+      genres: normalizedGenres,
       user: userId,
     });
 
@@ -77,7 +101,6 @@ const createBook = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to create book",
-      error: error.message,
     });
   }
 };
@@ -90,8 +113,18 @@ const updateBook = async (req, res) => {
   try {
     const userId = req.user.id || req.user._id;
 
-    // Never allow the frontend to change ownership
-    const { user, ...updateData } = req.body;
+    const body = req.body || {};
+    const { user, genres, ...updateData } = body;
+
+    if (genres !== undefined) {
+      if (!Array.isArray(genres)) {
+        return res.status(400).json({
+          message: "Genres must be an array of supported values.",
+        });
+      }
+
+      updateData.genres = normalizeGenres(genres);
+    }
 
     const book = await Book.findOneAndUpdate(
       {
@@ -117,7 +150,6 @@ const updateBook = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to update book",
-      error: error.message,
     });
   }
 };
@@ -150,7 +182,6 @@ const deleteBook = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to delete book",
-      error: error.message,
     });
   }
 };
@@ -190,7 +221,6 @@ const toggleFavorite = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to update favorite",
-      error: error.message,
     });
   }
 };
@@ -214,7 +244,6 @@ const getFavoriteBooks = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to fetch favorite books",
-      error: error.message,
     });
   }
 };
@@ -265,7 +294,6 @@ const updateBookRating = async (req, res) => {
 
     res.status(500).json({
       message: "Failed to update rating",
-      error: error.message,
     });
   }
 };
